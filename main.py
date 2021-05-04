@@ -40,15 +40,10 @@ alarm = """
         rows: 4
         Button:
             text: 'Alarm 1'
-            on_release: root.manager.current = 'edit1_page'  
-                                
+            on_release: root.manager.current = 'edit1_page'                        
         Button:
             text: 'Alarm 2'
             on_release: root.manager.current = 'edit2_page'
-               
-        Button:
-            text: 'QR Code Scanner'
-            on_release: root.manager.current = 'qrAPP' 
    
 <AlarmEdit>:
     BoxLayout:
@@ -122,6 +117,8 @@ class MyClock(Label):
         self.current_time = strftime("%I:%M:%S %p")
         app = App.get_running_app()
         t1 = app.root.ids.sm.get_screen('edit1_page').alarm(self.current_time)
+        t2 = app.root.ids.sm.get_screen('edit2_page').alarm(self.current_time)
+
 
 #KILL ALARM WITH QR CODE
 class Reader(Screen): 
@@ -146,7 +143,7 @@ class AlarmEdit(Screen):
                 a_time = '0' + a_time
             print(f'a: {a_time} ct: {current_time}')  # test to watch the time
             if a_time == current_time:
-                popup = Popup(title='Alarm 1', content=Label(text=self.alarm_time), size_hint=(None, None), size=(400, 400))
+                popup = Popup(title='Alarm', title_size=20, content=Label(text=self.alarm_time), size_hint=(None, None), size=(400, 400))
                 b = multiprocessing.Process(target=open_child)
                 start = b.start()
                 popup.on_open:(start)
